@@ -1,13 +1,14 @@
+import GeneralRouter from "./components/GeneralRouter";
+import ErrorBoundary from "./components/ErrorBoundary"
 
-
-function App() {
-
-
+export default function App() {
   return (
     <>
-      <h1>Unilag Business Finder App</h1>
+     <ErrorBoundary>
+      <GeneralRouter/>
+     </ErrorBoundary>
     </>
   )
 }
 
-export default App
+
