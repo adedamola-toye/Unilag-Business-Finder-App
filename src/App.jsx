@@ -1,15 +1,19 @@
-import Home from "./components/Home"
-import Header from "./components/Header"
+import GeneralRouter from "./components/GeneralRouter";
+import ErrorBoundary from "./components/ErrorBoundary"
+
 
 function App() {
 
 
   return (
-    <>
-      <Home/>
-      <Header/>
-    </>
-  )
-}
+    <ErrorBoundary>
+      <GeneralRouter/>
+    </ErrorBoundary>
 
-export default App
+      
+
+  )}
+
+  export default App
+
+
