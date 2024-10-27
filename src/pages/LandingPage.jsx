@@ -13,6 +13,7 @@ function LandingPage() {
           journey with us!
         </p>
       </div>
+      <button>Get started</button>
     </div>
   );
 }
