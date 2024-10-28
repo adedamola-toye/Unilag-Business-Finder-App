@@ -5,6 +5,7 @@ import SignUp from "../pages/Signup";
 import NotFoundPage from "./404page";
 import AddBusiness from "../pages/AddBusiness";
 
+
 export default function GeneralRouter(){
     return(
            <>

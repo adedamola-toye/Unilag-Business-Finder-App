@@ -14,10 +14,9 @@ function LandingPage() {
       <div
         className="h-screen flex justify-center items-center p-10 mt-[-30px]bg-[url(backgroundImage)]"
         style={{
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `linear-gradient(rgba(219, 195, 195, 0.8), rgba(219, 195, 195, 0.8)), url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          top: "2px",
         }}
       >
         <div>
