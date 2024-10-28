@@ -5,12 +5,17 @@ export default {
   ],
   theme: {
     colors: {
-      "main": "#141619",
-      "complementary": "#2C2E3A",
-      "accent": "#B3B4BD",
-      "navy": "#050A44"
+      "main": "#800000", //marron
+      "complementary": "#a84425", //brownish gold
+      "accent": "#f2e9e9",
+      "navy": "white"
     },
-    extend: {},
+    extend: {
+      screens:{
+        'max-sm' : {'max': '639px'},
+        'lg-max': {'max': '1280px'}
+      }
+    },
   },
   plugins: [],
 }

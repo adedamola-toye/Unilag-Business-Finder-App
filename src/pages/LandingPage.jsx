@@ -4,9 +4,9 @@ function LandingPage() {
   return (
     <div className="home">
       <Header />
-      <div className="h-screen flex justify-center items-center p-10">
+      <div className="h-screen flex justify-center items-center p-10 mt-[-30px]">
         <div>
-        <h1 className="text-center text-[34px] md:text-[50px] lg:text-[50px] p-5 font-bold">Welcome To Unilag Biz Finder</h1>
+        <h1 className="text-center text-[34px] md:text-[50px] lg:text-[50px] p-5 font-bold">Welcome To Unilag BizFinder</h1>
         <div className="flex justify-center items-center">
         <p className="flex justify-center items-center text-center text-sm md:text-lg lg:text-lg max-w-[1100px] mx-auto">
           Looking for a quick snack, the nearest salon or a cozy cafe? Unilag
@@ -16,7 +16,7 @@ function LandingPage() {
         </p>
         </div>
         <div className="flex justify-center items-center mt-10">
-          <button className="bg-main p-4 rounded text-accent w-[300px]">Get started</button>
+          <button className="bg-main p-4 rounded text-accent w-[300px] hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105">Get started</button>
         </div>
       </div>
     </div>
