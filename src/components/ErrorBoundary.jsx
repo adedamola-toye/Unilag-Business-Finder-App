@@ -18,10 +18,15 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="bg-black">
-          <h1 className="text-xl">Oops! Something went wrong</h1>
-          <p>Try refreshing the page</p>
-          <p>Or go back to another page</p>
+        <div className="h-screen bg-navy text-accent rounded flex justify-center items-center ">
+        <div className="">
+           <h1 className="text-[50px] text-center">Oops! Something went wrong</h1>
+    
+          <div className="text-center leading-8">
+            <p>Try refreshing the page</p>
+            <p>Or go back to another Page</p>
+          </div>
+        </div>
         </div>
       );
     }
