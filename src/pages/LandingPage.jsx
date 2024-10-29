@@ -1,13 +1,24 @@
+
+import {useContext } from "react";
+import ModalContext from "../contexts/ModalContext";
 import Header from "../components/Header";
 import "../App.css";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/background-pic.jpg";
+import SignupModal from "../pages/ModalPopuup/SignupModal";
 
 function LandingPage() {
-  const navigate = useNavigate();
+  
+  //const navigate = useNavigate();
+  const {openModal} = useContext(ModalContext)
+
   const handleGetStartedLink = () => {
-    navigate("./SignUp");
+    openModal()
   };
+
+  
+  
+
   return (
     <div className="home">
       <Header />
@@ -41,6 +52,7 @@ function LandingPage() {
           </div>
         </div>
       </div>
+      <SignupModal/>
     </div>
   );
 }
