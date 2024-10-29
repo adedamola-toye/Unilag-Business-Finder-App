@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom"
 export default function NotFoundPage(){
     return(
         <>
-        <div className="h-screen bg-navy text-accent rounded flex justify-center items-center ">
+        <div className="h-screen bg-complementary text-accent rounded flex justify-center items-center ">
             <div className="">
                 <h1 className="text-[200px] text-center">404</h1>
          <h1 className="text-center">Oops! Page Not Found</h1>

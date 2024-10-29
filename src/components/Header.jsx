@@ -4,14 +4,22 @@ import UnilagLogo from "../assets/unilag-logo.svg";
 import NavBar from "./Navbar";
 import "../App.css";
 import { FaTimes } from "react-icons/fa";
-
 import { CiMenuBurger } from "react-icons/ci";
+import { useContext } from "react";
+import ModalContext from "../contexts/ModalContext";
 
 export default function Header() {
+  const {openModal}= useContext(ModalContext);
   const [onClick, setOnClick] = useState(false);
   const handleClick = () => {
     setOnClick(!onClick);
   };
+
+
+  const openSignUp = (event) => {
+      event.preventDefault();
+      openModal("signup")
+  }
 
   const navContent = (
     <>
@@ -28,15 +36,24 @@ export default function Header() {
           </li>
           <li>
             <Link
-              to="/addbiz"
+              to="/explore"
               className="decoration-black hover:bg-complementary p-3"
             >
               Explore Businesses
             </Link>
           </li>
           <li>
+                    <Link
+                        to="/blog"
+                        className="decoration-black hover:bg-complementary p-3 transition-all duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Blog
+                    </Link>
+                </li>
+          <li>
             <Link
               to="/signup"
+              onClick={openSignUp}
               className="decoration-black hover:bg-complementary p-3"
             >
               Sign Up

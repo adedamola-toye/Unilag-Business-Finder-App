@@ -18,7 +18,7 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="h-screen bg-navy text-accent rounded flex justify-center items-center ">
+        <div className="h-screen bg-complementary text-accent rounded flex justify-center items-center ">
         <div className="">
            <h1 className="text-[50px] text-center">Oops! Something went wrong</h1>
     

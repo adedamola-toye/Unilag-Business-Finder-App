@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";
 import LogIn from "../pages/Login";
-
+import Blog from "../pages/Blog";
 import NotFoundPage from "./404page";
-import AddBusiness from "../pages/AddBusiness";
+import ExploreBusiness from "../pages/ExploreBusiness"
 import ModalProvider from "../contexts/ModalProvider";
 
 
@@ -14,7 +14,8 @@ export default function GeneralRouter(){
             <Routes>
                 <Route path="/" element={<LandingPage/>}/>
                 <Route path="/login" element={<LogIn/>}/>
-                <Route path="/addbiz" element={<AddBusiness/>}/>
+                <Route path="/explore" element={<ExploreBusiness/>}/>
+                <Route path="/blog" element={<Blog/>}/>
                 {/* <Route path="/signup" element={<SignUp/>}/> */}
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
