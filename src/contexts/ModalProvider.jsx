@@ -6,17 +6,21 @@ ModalProvider.propTypes = {
     children: PropTypes.node.isRequired
 }
 function ModalProvider({children}){
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentModal, setCurrentModal] = useState(null);
 
-    const openModal = () => {
-        setIsModalOpen(true)
+    const openModal = (modalType) => {
+        console.log(`Opening modal: ${modalType}`)
+        setCurrentModal(modalType)
+        
     }
 
     const closeModal = () => {
-        setIsModalOpen(false)
+        console.log("Closing modal")
+        setCurrentModal(null)
+        
     }
     return(
-        <ModalContext.Provider value={{isModalOpen, openModal, closeModal}}>
+        <ModalContext.Provider value={{currentModal, openModal, closeModal}}>
             {children}
         </ModalContext.Provider>
         

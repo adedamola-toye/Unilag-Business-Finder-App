@@ -5,10 +5,16 @@ import './custom.css';
 
 export default function NavBar() {
     const {openModal}= useContext(ModalContext)
-    const handleNavLinkClick = (event) => {
+
+    const openSignUp = (event) => {
         event.preventDefault();
-        openModal()
+        openModal("signup")
     }
+    const openLogin = (event) => {
+        event.preventDefault();
+        console.log("Opening Login Modal");
+        openModal("login");
+    };
     
     return (
         <nav className="uppercase">
@@ -24,7 +30,7 @@ export default function NavBar() {
                 <li>
                     <Link
                         to="/addbiz"
-                        onClick={handleNavLinkClick}
+                        onClick={openSignUp}
                         className="decoration-black hover:bg-complementary p-3 transition-all duration-300 ease-in-out transform hover:scale-105"
                     >
                         Explore Businesses
@@ -33,7 +39,7 @@ export default function NavBar() {
                 <li>
                     <Link
                         to="/signup"
-                        onClick={handleNavLinkClick}
+                        onClick={openSignUp}
                         className="decoration-black bg-complementary p-3 px-10 rounded hover:bg-main transition-all duration-300 ease-in-out transform hover:scale-105"
                     >
                         Sign Up
@@ -42,7 +48,7 @@ export default function NavBar() {
                 <li>
                     <Link
                         to="/login"
-                        onClick={handleNavLinkClick}
+                        onClick={openLogin}
                         className="decoration-black p-3 px-10 rounded border-4 border-complementary hover:bg-complementary transition-all duration-300 ease-in-out transform hover:scale-105"
                     >
                         Log In

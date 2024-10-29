@@ -6,6 +6,7 @@ import "../App.css";
 //import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/background-pic.jpg";
 import SignupModal from "../pages/ModalPopuup/SignupModal";
+import LoginModal from "./ModalPopuup/LoginModal";
 
 function LandingPage() {
   
@@ -13,7 +14,7 @@ function LandingPage() {
   const {openModal} = useContext(ModalContext)
 
   const handleGetStartedLink = () => {
-    openModal()
+    openModal("signup")
   };
 
   
@@ -53,6 +54,7 @@ function LandingPage() {
         </div>
       </div>
       <SignupModal/>
+      <LoginModal/>
     </div>
   );
 }

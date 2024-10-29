@@ -7,14 +7,22 @@ import ModalContext from "../../contexts/ModalContext";
 
 export default function SignupModal() {
     
-  const {isModalOpen,closeModal} = useContext(ModalContext)
- 
+  const {currentModal, closeModal, setCurrentModal} = useContext(ModalContext)
+  
+   const switchToLoginModal = () => {
+    setCurrentModal("login")
+    console.log("Switching to login")
+  }
+
+  if (currentModal !== "signup"){
+    return null
+  }
    
   return (
     <>
-    {isModalOpen? <div>
+    <div>
         
-        <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? "visible bg-[#ffffff]/20": "invisible"}`}>
+        <div className={`fixed inset-0 flex justify-center items-center transition-colors`}>
             {/* image */}
             <form>
                 <h2>Create an account with us to get started</h2>
@@ -33,12 +41,12 @@ export default function SignupModal() {
                 <input type="password" />
 
                 <button>Create Account</button>
-                <p>Already have an account with us? <Link to="/Login" className="text-main">Log in</Link></p>
+                <p>Already have an account with us? <Link  className="text-main" onClick={switchToLoginModal}>Log in</Link></p>
                 
                 <button className="border px-3 py-1 bg-main text-accent rounded hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105">Sign Up</button>
             </form>
         </div>
-      </div>: null}
+      </div>
       
     </>
   );
