@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
+import AddBusiness from "../pages/AddBusiness"
 
 export default function ExploreBusiness(){
     return(
@@ -11,6 +12,8 @@ export default function ExploreBusiness(){
             <button className="bg-main py-3 px-5 text-[18px] text-accent rounded-sm hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105 ">Search</button>
         </div>
         </div>
+
+        <AddBusiness/>
         </>
     )
 }
