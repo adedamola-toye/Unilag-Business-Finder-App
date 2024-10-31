@@ -21,6 +21,11 @@ export default function Header() {
       openModal("signup")
   }
 
+  const openLogIn = (event) =>{
+    event.preventDefault();
+    openModal("login")
+  }
+
   const navContent = (
     <>
       <div className="lg:hidden block absolute top-[80px] w-full h-[50vh] left-0 right-0 bg-main transition text-center">
@@ -62,6 +67,7 @@ export default function Header() {
           <li>
             <Link
               to="/login"
+              onClick={openLogIn}
               className="decoration-black hover:bg-complementary p-3"
             >
               Log In

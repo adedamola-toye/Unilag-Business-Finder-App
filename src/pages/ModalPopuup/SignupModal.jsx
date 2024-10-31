@@ -7,10 +7,10 @@ import { FaTimes } from "react-icons/fa";
 
 export default function SignupModal() {
     
-  const {currentModal, closeModal, setCurrentModal} = useContext(ModalContext)
+  const {currentModal, closeModal,  openModal} = useContext(ModalContext)
   
    const switchToLoginModal = () => {
-    setCurrentModal("login")
+    openModal("login")
     console.log("Switching to login")
   }
 

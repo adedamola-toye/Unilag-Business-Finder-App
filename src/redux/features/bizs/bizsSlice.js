@@ -18,5 +18,5 @@ export const businessesSlice = createSlice({
 })
 
 
-export default bizs.reducers;
-export const {setBusinesses} = bizs.actions;
+export default businessesSlice.reducers;
+export const {setBusinesses} = businessesSlice.actions;

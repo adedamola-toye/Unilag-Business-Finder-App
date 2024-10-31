@@ -9,7 +9,7 @@ function ModalProvider({children}){
     const [currentModal, setCurrentModal] = useState(null);
 
     const openModal = (modalType) => {
-        console.log(`Opening modal: ${modalType}`)
+        console.log(`Setting current modal: ${modalType}`)
         setCurrentModal(modalType)
         
     }
