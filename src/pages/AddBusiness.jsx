@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ref, push } from 'firebase/database';
-import { database } from '../../firebaseConfig.js';
+import { database } from '../firebase/firebaseConfig.js';
 
 
  const DataForm = () => {
