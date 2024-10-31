@@ -12,7 +12,7 @@ export default function SignupModal() {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
 
-  // State hooks for form inputs
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,11 +35,11 @@ export default function SignupModal() {
     }
     dispatch(setLoading(true));
     try {
-      const user = await signUp(username, email, password); // Sign up with Firebase
-      dispatch(setUser(user)); // Update Redux store with user
-      closeModal(); // Close the modal on successful signup
+      const user = await signUp(username, email, password); 
+      dispatch(setUser(user)); 
+      closeModal(); 
     } catch (error) {
-      dispatch(setError(error.message)); // Show error if signup fails
+      dispatch(setError(error.message)); 
     } finally {
       dispatch(setLoading(false));
     }
