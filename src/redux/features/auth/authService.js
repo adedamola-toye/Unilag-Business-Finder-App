@@ -61,7 +61,7 @@ export const signInWithGoogle = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        // Store Google user's details in Firestore if needed
+        // Store Google user's details in Firestore
         const userDoc = doc(db, 'users', user.uid);
         await setDoc(userDoc, {
             username: user.displayName,

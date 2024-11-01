@@ -14,7 +14,7 @@ export default function GeneralRouter(){
             <Routes>
                 <Route path="/" element={<LandingPage/>}/>
                 <Route path="/login" element={<LogIn/>}/>
-                <Route path="/explore" element={<ExploreBusiness/>}/>
+                <Route path="/explore-business" element={<ExploreBusiness/>}/>
                 <Route path="/blog" element={<Blog/>}/>
                 {/* <Route path="/signup" element={<SignUp/>}/> */}
                 <Route path="*" element={<NotFoundPage/>}/>

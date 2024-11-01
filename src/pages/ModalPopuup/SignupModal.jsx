@@ -2,16 +2,17 @@ import { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../redux/features/auth/authService";
 import { setUser, setLoading, setError } from "../../redux/features/auth/authSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import ModalContext from "../../contexts/ModalContext";
 import { FaTimes } from "react-icons/fa";
+
 
 export default function SignupModal() {
   const { currentModal, closeModal, openModal } = useContext(ModalContext);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
-
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function SignupModal() {
     return null;
   }
 
+  
   // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,12 +40,14 @@ export default function SignupModal() {
       const user = await signUp(username, email, password); 
       dispatch(setUser(user)); 
       closeModal(); 
+      navigate("/explore-business")
     } catch (error) {
       dispatch(setError(error.message)); 
     } finally {
       dispatch(setLoading(false));
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center">
@@ -57,7 +61,7 @@ export default function SignupModal() {
         <form onSubmit={handleSubmit}>
           <div className="w-full mb-4">
             <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full">
-              Sign in with Google
+              Sign up with Google
             </button>
           </div>
           <div className="flex flex-col gap-1">
