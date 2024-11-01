@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../../redux/features/auth/authService";
+import { signInWithGoogle, signUp } from "../../redux/features/auth/authService";
 import { setUser, setLoading, setError } from "../../redux/features/auth/authSlice";
 import { Link, useNavigate} from "react-router-dom";
 import ModalContext from "../../contexts/ModalContext";
@@ -27,7 +27,23 @@ export default function SignupModal() {
     return null;
   }
 
-  
+  //Handle sign up with google
+  const handleGoogleSignUp = async() =>{
+    dispatch(setLoading(true));
+    try{
+      const user = await signInWithGoogle();
+      dispatch(setUser(user));
+      closeModal();
+      navigate("/explore-business")
+    } 
+    catch(error){
+      dispatch(setError(error.message))
+    }
+    finally{
+      dispatch(setLoading(false))
+    }
+  }
+
   // Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +76,9 @@ export default function SignupModal() {
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="w-full mb-4">
-            <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full">
+            <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full"
+            type="button"
+            onClick={handleGoogleSignUp}>
               Sign up with Google
             </button>
           </div>
