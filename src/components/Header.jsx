@@ -7,24 +7,32 @@ import { FaTimes } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { useContext } from "react";
 import ModalContext from "../contexts/ModalContext";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "firebase/auth";
 
 export default function Header() {
-  const {openModal}= useContext(ModalContext);
+  const { openModal } = useContext(ModalContext);
   const [onClick, setOnClick] = useState(false);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     setOnClick(!onClick);
   };
 
-
   const openSignUp = (event) => {
-      event.preventDefault();
-      openModal("signup")
-  }
-
-  const openLogIn = (event) =>{
     event.preventDefault();
-    openModal("login")
-  }
+    openModal("signup");
+  };
+
+  const openLogIn = (event) => {
+    event.preventDefault();
+    openModal("login");
+  };
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
 
   const navContent = (
     <>
@@ -48,14 +56,20 @@ export default function Header() {
             </Link>
           </li>
           <li>
-                    <Link
-                        to="/blog"
-                        className="decoration-black hover:bg-complementary p-3 transition-all duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Blog
-                    </Link>
-                </li>
-          <li>
+            <Link
+              to="/blog"
+              className="decoration-black hover:bg-complementary p-3 transition-all duration-300 ease-in-out transform hover:scale-105"
+            >
+              Blog
+            </Link>
+          </li>
+          {user ? (
+            <li>
+              <Link className="decoration-black hover:bg-complementary p-3" onClick={handleSignOut}>Log out</Link>
+            </li>
+          ): (
+            <>
+              <li>
             <Link
               to="/signup"
               onClick={openSignUp}
@@ -73,6 +87,9 @@ export default function Header() {
               Log In
             </Link>
           </li>
+            </>
+          )}
+          
         </ul>
       </div>
     </>

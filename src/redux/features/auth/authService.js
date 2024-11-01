@@ -1,6 +1,6 @@
 import { getFirestore, doc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { auth } from '../../../firebase/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth';
 
 const db = getFirestore();
 
@@ -73,3 +73,7 @@ export const signInWithGoogle = async () => {
         throw error;
     }
 };
+
+export const signOut = async() =>{
+    return firebaseSignOut(auth)
+}
