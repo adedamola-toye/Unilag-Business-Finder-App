@@ -33,7 +33,7 @@ function LoginModal() {
             const user = await loginWithUsername(username, password);
             dispatch(setUser(user))
             closeModal();
-            navigate("/explore-business")
+            navigate("/welcome-user", {state: {username: user.username}})
         }
         catch(error){
             dispatch(setError(error.message));
@@ -50,7 +50,7 @@ function LoginModal() {
       const user = await signInWithGoogle();
       dispatch(setUser(user));
       closeModal();
-      navigate("/explore-business")
+      navigate("/welcome-user", {state: {username: user.username}})
     } 
     catch(error){
       dispatch(setError(error.message))

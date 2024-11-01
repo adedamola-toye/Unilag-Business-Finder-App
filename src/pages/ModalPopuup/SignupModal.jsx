@@ -34,7 +34,7 @@ export default function SignupModal() {
       const user = await signInWithGoogle();
       dispatch(setUser(user));
       closeModal();
-      navigate("/explore-business")
+      navigate("/welcome-user", {state: {username: user.username}})
     } 
     catch(error){
       dispatch(setError(error.message))
@@ -56,7 +56,7 @@ export default function SignupModal() {
       const user = await signUp(username, email, password); 
       dispatch(setUser(user)); 
       closeModal(); 
-      navigate("/explore-business")
+      navigate("/welcome-user", {state: {username: user.username}})
     } catch (error) {
       dispatch(setError(error.message)); 
     } finally {
