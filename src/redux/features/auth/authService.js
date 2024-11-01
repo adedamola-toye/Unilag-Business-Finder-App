@@ -74,6 +74,6 @@ export const signInWithGoogle = async () => {
     }
 };
 
-export const signOut = async() =>{
+export const customSignOut = async() =>{
     return firebaseSignOut(auth)
 }

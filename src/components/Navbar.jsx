@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import ModalContext from "../contexts/ModalContext";
 import './custom.css';
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "firebase/auth";
+import { customSignOut } from "../redux/features/auth/authService"
+import { setUser } from "../redux/features/auth/authSlice";
 
 export default function NavBar() {
     const {openModal}= useContext(ModalContext)
     const user = useSelector((state)=>state.auth.user)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const openSignUp = (event) => {
         event.preventDefault();
@@ -21,8 +23,15 @@ export default function NavBar() {
     };
 
     //Handle sign out
-    const handleSignOut = () =>{
-        dispatch(signOut());
+    const handleSignOut =async () =>{
+        try{
+            await customSignOut();
+            dispatch(setUser(null))
+            navigate("/")
+        }
+        catch(error){
+            console.log("Error signing out: ", error)
+        }
     }
     
     return (
