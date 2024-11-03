@@ -47,7 +47,7 @@ export default function NavBar() {
                 </li>
                 <li>
                     <Link
-                        to="/explore"
+                        to="/explore-business"
                         className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
                     >
                         Explore Businesses
@@ -61,6 +61,27 @@ export default function NavBar() {
                         Blog
                     </Link>
                 </li>
+                
+                
+                {/* i dont get why this didn't work */}
+                {/* <li>
+                    <Link
+                        to="/hire-a-professional"
+                        className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Hire A Professional
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to="/job-openings"
+                        className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Job Openings
+                    </Link>
+                </li> */}
+
+                
                 {user ? (
                     <li>
                         <Link className="decoration-black bg-complementary p-3 px-10 rounded hover:bg-main transition-all duration-300 ease-in-out transform hover:scale-105" onClick={handleSignOut}>Log out</Link>

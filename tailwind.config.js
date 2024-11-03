@@ -13,8 +13,13 @@ export default {
     extend: {
       screens:{
         'max-sm' : {'max': '639px'},
-        'lg-max': {'max': '1280px'}
-      }
+        'lg-max': {'max': '1280px'},
+        "md-lg": "1024px",
+        "lg": "1025px"  //this was the solution to that overlapping header!! 
+      },
+      fontFamily: {
+        customFont: ['inter', 'serif'],
+      },
     },
   },
   plugins: [],

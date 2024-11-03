@@ -36,7 +36,7 @@ export default function Header() {
 
   const navContent = (
     <>
-      <div className="lg:hidden block absolute top-[80px] w-full h-[50vh] left-0 right-0 bg-main transition text-center">
+      <div className="lg:hidden block absolute top-[80px] w-full h-[50vh] left-0 right-0 z-50 bg-main transition text-center">
         <div className="border border"></div>
         <ul className="list-none space-y-10 m-10 mb-[-20px]">
           <li>
@@ -49,7 +49,7 @@ export default function Header() {
           </li>
           <li>
             <Link
-              to="/explore"
+              to="/explore-business"
               className="decoration-black hover:bg-complementary p-3"
             >
               Explore Businesses
@@ -95,7 +95,7 @@ export default function Header() {
     </>
   );
   return (
-    <header className="flex items-center justify-between bg-main text-accent z-50 px-[30px] py-3 pl-[0.1px] lg:px-5 lg:py-5 lg:pr-[90px]   ">
+    <header className="flex items-center justify-between bg-main text-accent z-50 px-4 py-3 md:px-5 md:py-3 lg:px-8 lg:py-4 lg:pr-[90px]">
       <div className="flex space-x-3 pl-7">
         <img src={UnilagLogo} alt="Unilag Logo" className="w-[60px] h-[60px]" />
         <h2 className="text-[25px] text-center mt-3 max-sm:text-[20px]">

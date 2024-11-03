@@ -7,6 +7,7 @@ import "../App.css";
 import backgroundImage from "../assets/background-pic.jpg";
 import SignupModal from "../pages/ModalPopuup/SignupModal";
 import LoginModal from "./ModalPopuup/LoginModal";
+import Footer from "../components/Footer";
 
 function LandingPage() {
   
@@ -24,7 +25,7 @@ function LandingPage() {
     <div className="home">
       <Header />
       <div
-        className="h-screen flex justify-center items-center p-10 mt-[-30px]bg-[url(backgroundImage)]"
+        className="h-screen flex justify-center items-center p-10 bg-[url(backgroundImage)]"
         style={{
           backgroundImage: `linear-gradient(rgba(219, 195, 195, 0.8), rgba(219, 195, 195, 0.8)), url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -55,6 +56,7 @@ function LandingPage() {
       </div>
       <SignupModal/>
       <LoginModal/>
+      <Footer/>
     </div>
   );
 }
