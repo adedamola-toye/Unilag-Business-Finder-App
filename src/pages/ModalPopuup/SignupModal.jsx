@@ -142,59 +142,130 @@ export default function SignupModal() {
   );
 }
  */
+
 import { useDispatch } from "react-redux";
 import { setUserType } from "../../redux/features/auth/authSlice";
 import { closeModal } from "../../redux/features/modal/modalSlice";
 import { FaTimes } from "react-icons/fa";
+import { useState } from "react";
 
 function SignupModal() {
   const dispatch = useDispatch();
+  const [selectedForm, setSelectedForm] = useState(null);
 
   const handleUserTypeSelection = (userType) => {
     dispatch(setUserType(userType));
+    setSelectedForm(userType); // Update state to open specific form modal
+  };
+
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+    setSelectedForm(null); // Reset form selection on close
+  };
+
+  // Function for rendering each specific form
+  const renderForm = () => {
+    switch (selectedForm) {
+      case "professional":
+        return (
+          <form className="flex flex-col gap-3">
+            <label>Full Name*</label>
+            <input type="text" className="p-2 rounded border" required />
+
+            <label>Skills*</label>
+            <input type="text" className="p-2 rounded border" required />
+
+            <label>Password*</label>
+            <input type="password" className="p-2 rounded border" required />
+
+            <button className="mt-4 p-2 bg-main text-white rounded">
+              Submit
+            </button>
+          </form>
+        );
+
+      case "business":
+        return (
+          <form className="flex flex-col gap-3">
+            <label>Business Name*</label>
+            <input type="text" className="p-2 rounded border" required />
+
+            <label>Field*</label>
+            <input type="text" className="p-2 rounded border" required />
+
+            <label>Email*</label>
+            <input type="email" className="p-2 rounded border" required />
+
+            <label>Password*</label>
+            <input type="password" className="p-2 rounded border" required />
+
+            <button className="mt-4 p-2 bg-main text-white rounded">
+              Submit
+            </button>
+          </form>
+        );
+
+      // Add other cases as needed
+
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center">
-      <div className="bg-[#f2e9e9] rounded-lg shadow-lg w-full max-w-md p-8 mx-4 relative">
-        <div className="cursor-pointer flex justify-end mb-4">
-          <FaTimes
-            size={24}
-            className="text-gray-500 hover:text-gray-700"
-            onClick={() => dispatch(closeModal())}
-          />
+      {selectedForm ? (
+        <div className="bg-[#f2e9e9] rounded-lg shadow-lg w-full max-w-md p-8 mx-4 relative">
+          <div className="flex justify-end mb-4">
+            <FaTimes
+              size={24}
+              className="text-gray-500 cursor-pointer hover:text-gray-700"
+              onClick={handleCloseModal}
+            />
+          </div>
+          <h2 className="text-center text-lg font-semibold mb-6">
+            {selectedForm === "professional"
+              ? "Sign Up To Get Hired"
+              : "Sign Up As A Business"}
+          </h2>
+          {renderForm()}
         </div>
+      ) : (
+        <div className="bg-[#f2e9e9] rounded-lg shadow-lg w-full max-w-md p-8 mx-4 relative">
+          <div className="flex justify-end mb-4">
+            <FaTimes
+              size={24}
+              className="text-gray-500 cursor-pointer hover:text-gray-700"
+              onClick={handleCloseModal}
+            />
+          </div>
+          <h2 className="text-center text-lg font-semibold text-gray-700 mb-6">
+            Create an account with us to get started
+          </h2>
+          <div className="flex flex-col space-y-4">
+            <button
+              onClick={() => handleUserTypeSelection("professional")}
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+            >
+              Sign Up To Get Hired
+            </button>
 
-        <h2 className="text-center text-lg font-semibold text-gray-700 mb-6">
-          Create an account with us to get started
-        </h2>
+            <button
+              onClick={() => handleUserTypeSelection("business")}
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+            >
+              Sign Up As A Business On Campus
+            </button>
 
-        <div className="flex flex-col space-y-4">
-          <button
-            onClick={() => handleUserTypeSelection("professional")}
-            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent  transition-transform transform 
-            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
-          >
-            Sign Up To Get Hired
-          </button>
-
-          <button
-            onClick={() => handleUserTypeSelection("business")}
-            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent  transition-transform transform 
-            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
-          >
-            Sign Up As A Business On Campus
-          </button>
-
-          <button
-            onClick={() => handleUserTypeSelection("explore businesses")}
-            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020]  hover:text-accent transition-transform transform 
-            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
-          >
-            Sign up to Explore Businesses
-          </button>
+            <button
+              onClick={() => handleUserTypeSelection("explore businesses")}
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+            >
+              Sign up to Explore Businesses
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
