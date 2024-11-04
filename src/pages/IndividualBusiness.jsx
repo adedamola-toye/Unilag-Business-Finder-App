@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { database } from '../firebase/firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
-import { ref, get } from 'firebase/database';
 import Header from "../components/Header";
 import { fetchFailure, fetchStart, fetchSuccess } from "../redux/features/bizs/bizsSlice";
+import Footer from '../components/Footer';
 
 
 export default function IndividualBusiness(){
@@ -14,41 +14,49 @@ export default function IndividualBusiness(){
     const {currentBusiness, loading, error} = useSelector((state) => state.bizs)
 
     useEffect(() => {
-        const businessRef = ref(database, `businesses/${id}`);
-    
-        get(businessRef)
-        .then((snapshot) => {
-            console.log('Fetched document data:', snapshot.val());
+        const fetchBusiness = async () => {
+          dispatch(fetchStart());
+          try {
+            const businessDoc = doc(database, 'businesses', id);
+            const businessSnapshot = await getDoc(businessDoc);
             
-            if (snapshot.exists()) {
-                dispatch(fetchSuccess(snapshot.val()));
+            if (businessSnapshot.exists()) {
+              dispatch(fetchSuccess(businessSnapshot.data()));
             } else {
-              console.log('No such document!');
+              dispatch(fetchFailure('No such business found!'));
             }
-          })
-          .catch((error) => {
-            console.error('Error fetching document:', error);
-          });
-      }, [id]);
+          } catch (err) {
+            dispatch(fetchFailure('Error fetching business data'));
+          }
+        };
+    
+        fetchBusiness();
+      }, [dispatch, id]);
+    
 
    
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className='text-center'>Loading...</p>;
   if (error) return <p>{error}</p>;
     return(
         <>
         <div>
             <Header/>
-        <div className="flex justify-center items-center h-screen text-2xl text-center">Login Page</div>
-        <div>
-      <h1>{currentBusiness.name}</h1>
-      <p>{currentBusiness.address}</p>
-      <p>{currentBusiness.category}</p>
-      <p>{currentBusiness.tel}</p>
-      <p>{currentBusiness.email}</p>
-      <p>{currentBusiness.description}</p>
-      <img src={currentBusiness.imgUrl} alt={currentBusiness.name} />
-    </div>
+        <div className='px-5 py-5 mb-10 md:mt-10 text-center'>
+            <div className='shadow-sm flex flex-col py-5 md:py-10 gap-3'>
+            <div className='flex justify-center items-center'>
+              <img src={currentBusiness.imgUrl} alt={currentBusiness.name} className='w-full md:w-[600px] md:h-[600px]'/>
+            </div>
+              <h1 className='text-lg font-semibold md:text-2xl'>{currentBusiness.name}</h1>
+              <p>{currentBusiness.category}</p>
+              <p>{currentBusiness.description}</p>
+              <p>Located at: {currentBusiness.address}</p>
+              <p>Tel - {currentBusiness.tel}</p>
+              <p>Contact - {currentBusiness.email}</p>
+        </div>
+        </div>
+
+        <Footer/>
         </div>
         </>
     )

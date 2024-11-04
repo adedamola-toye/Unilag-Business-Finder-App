@@ -34,6 +34,7 @@ export default function ExploreBusiness(){
         
             <SearchBusiness/>
        <div className="p-2 lg:p-10 md:p-10">
+        <h1 className="text-2xl font-bold px-4 mt-10">Some Businesses</h1>
         <div className="text-md md:text-lg lg:text-lg text-center grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 p-2 md:p-10 lg:p-10"> 
             {displayedBusinesses.map((biz) => (
                <ul key={biz.id} className="mt-5">

@@ -59,7 +59,7 @@ export default function AddBusiness(){
   return (
     <>
     <div className='flex flex-col p-10 md:mx-[60px] lg:mx-[80px] shadow-sm bg-[#f4dcd5] mb-[60px]'>
-    <h1 className="text-center text-md">Add Businesses in Unilag you think should be on this platform</h1>
+    <h1 className="text-center text-md">Add Businesses in Unilag that you think should be on this platform</h1>
     <div>
     <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
 

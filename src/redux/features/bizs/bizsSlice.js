@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     allBizs: [],
     displayBizs: [],
-    currentBusiness: null,
+    currentBusiness: {},
     loading: false,
     error: null
 }
