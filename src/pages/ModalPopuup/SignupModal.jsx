@@ -245,21 +245,21 @@ function SignupModal() {
           <div className="flex flex-col space-y-4">
             <button
               onClick={() => handleUserTypeSelection("professional")}
-              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
             >
               Sign Up To Get Hired
             </button>
 
             <button
               onClick={() => handleUserTypeSelection("business")}
-              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
             >
               Sign Up As A Business On Campus
             </button>
 
             <button
               onClick={() => handleUserTypeSelection("explore businesses")}
-              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-white transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
             >
               Sign up to Explore Businesses
             </button>
