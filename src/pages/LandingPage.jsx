@@ -1,6 +1,6 @@
 
-import {useContext } from "react";
-import ModalContext from "../contexts/ModalContext";
+import { useDispatch, useSelector } from "react-redux";
+import {openModal} from '../redux/features/modal/modalSlice'
 import Header from "../components/Header";
 import "../App.css";
 //import { useNavigate } from "react-router-dom";
@@ -11,11 +11,11 @@ import Footer from "../components/Footer";
 
 function LandingPage() {
   
-  //const navigate = useNavigate();
-  const {openModal} = useContext(ModalContext)
+  const dispatch = useDispatch();
+  const {isOpen, modalType} = useSelector((state) => state.modal)
 
   const handleGetStartedLink = () => {
-    openModal("signup")
+    dispatch(openModal("signup"))
   };
 
   
@@ -54,8 +54,9 @@ function LandingPage() {
           </div>
         </div>
       </div>
-      <SignupModal/>
-      <LoginModal/>
+      
+      {modalType === "signup" && <SignupModal/>}
+      {isOpen && modalType === "login" && <LoginModal />}
       <Footer/>
     </div>
   );

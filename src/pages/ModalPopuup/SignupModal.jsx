@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+/* import { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithGoogle, signUp } from "../../redux/features/auth/authService";
 import { setUser, setLoading, setError } from "../../redux/features/auth/authSlice";
@@ -141,3 +141,62 @@ export default function SignupModal() {
     </div>
   );
 }
+ */
+import { useDispatch } from "react-redux";
+import { setUserType } from "../../redux/features/auth/authSlice";
+import { closeModal } from "../../redux/features/modal/modalSlice";
+import { FaTimes } from "react-icons/fa";
+
+function SignupModal() {
+  const dispatch = useDispatch();
+
+  const handleUserTypeSelection = (userType) => {
+    dispatch(setUserType(userType));
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center">
+      <div className="bg-[#f2e9e9] rounded-lg shadow-lg w-full max-w-md p-8 mx-4 relative">
+        <div className="cursor-pointer flex justify-end mb-4">
+          <FaTimes
+            size={24}
+            className="text-gray-500 hover:text-gray-700"
+            onClick={() => dispatch(closeModal())}
+          />
+        </div>
+
+        <h2 className="text-center text-lg font-semibold text-gray-700 mb-6">
+          Create an account with us to get started
+        </h2>
+
+        <div className="flex flex-col space-y-4">
+          <button
+            onClick={() => handleUserTypeSelection("professional")}
+            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent  transition-transform transform 
+            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+          >
+            Sign Up To Hire A Professional
+          </button>
+
+          <button
+            onClick={() => handleUserTypeSelection("business")}
+            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent  transition-transform transform 
+            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+          >
+            Sign Up As A Business On Campus
+          </button>
+
+          <button
+            onClick={() => handleUserTypeSelection("explore businesses")}
+            className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020]  hover:text-accent transition-transform transform 
+            hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
+          >
+            Sign up to Explore Businesses
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SignupModal;
