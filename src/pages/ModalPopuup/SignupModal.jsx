@@ -175,7 +175,7 @@ function SignupModal() {
             className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent  transition-transform transform 
             hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
           >
-            Sign Up To Hire A Professional
+            Sign Up To Get Hired
           </button>
 
           <button
