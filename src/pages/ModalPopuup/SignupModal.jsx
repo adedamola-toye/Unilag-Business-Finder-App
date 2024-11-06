@@ -144,14 +144,16 @@ export default function SignupModal() {
  */
 
 import { useDispatch } from "react-redux";
-import { setUserType } from "../../redux/features/auth/authSlice";
+import { setUserType, setLoading, setError } from "../../redux/features/auth/authSlice";
 import { closeModal } from "../../redux/features/modal/modalSlice";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
+import {signUp} from '../../redux/features/auth/authService'
 
 function SignupModal() {
   const dispatch = useDispatch();
   const [selectedForm, setSelectedForm] = useState(null);
+  const [formData, setFormData] = useState({})
 
   const handleUserTypeSelection = (userType) => {
     dispatch(setUserType(userType));
@@ -163,19 +165,81 @@ function SignupModal() {
     setSelectedForm(null); // Reset form selection on close
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleTalentSignUp = async() => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      dispatch(setError("Passwords do not match"));
+      return;
+    }
+    dispatch(setLoading(true))
+    try{
+      const {name, email, password} = formData;
+      const user = await signUp(name, email, password)
+      dispatch(setUserType('talent'));
+      dispatch(setUserData(user));
+      handleCloseModal();
+    }
+    catch(error){
+      dispatch(setError(error.message))
+    }
+    finally{
+      dispatch(setLoading(false))
+    }
+  }
+
+  const handleBusinessSignUp = async() => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      dispatch(setError("Passwords do not match"));
+      return;
+    }
+    dispatch(setLoading(true))
+    try{
+      const {name, email, password} = formData;
+      const user = await signUp(name, email, password)
+      dispatch(setUserType('business'));
+      dispatch(setUserData(user));
+      handleCloseModal();
+    }
+    catch(error){
+      dispatch(setError(error.message))
+    }
+    finally{
+      dispatch(setLoading(false))
+    }
+  }
+
   // Function for rendering each specific form
   const renderForm = () => {
     switch (selectedForm) {
-      case "professional":
+      case "talent":
         return (
           <form className="flex flex-col gap-3">
+            <div className="w-full mb-4">
+            <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full"
+            type="button">
+              Sign up with Google
+            </button>
+          </div>
+
             <label>Full Name*</label>
             <input type="text" className="p-2 rounded border" required />
 
-            <label>Skills*</label>
-            <input type="text" className="p-2 rounded border" required />
+            <label>Email*</label>
+            <input type="email" className="p-2 rounded border" required />
 
             <label>Password*</label>
+            <input type="password" className="p-2 rounded border" required />
+
+            <label>Confirm Password*</label>
             <input type="password" className="p-2 rounded border" required />
 
             <button className="mt-4 p-2 bg-main text-white rounded">
@@ -190,22 +254,29 @@ function SignupModal() {
             <label>Business Name*</label>
             <input type="text" className="p-2 rounded border" required />
 
-            <label>Field*</label>
+            <label>Business Email Address*</label>
             <input type="text" className="p-2 rounded border" required />
 
-            <label>Email*</label>
+            <label>Password*</label>
             <input type="email" className="p-2 rounded border" required />
 
-            <label>Password*</label>
+            <label>Confirm Password*</label>
             <input type="password" className="p-2 rounded border" required />
 
+            <label>Business Type*</label>
+           <select name="" id="" className="p-2 rounded border" required>
+            <option value="">Retails</option>
+            <option value="">Food</option>
+            <option value="">Services</option>
+            <option value="">Technology</option>
+           </select>
+
+          
             <button className="mt-4 p-2 bg-main text-white rounded">
               Submit
             </button>
           </form>
         );
-
-      // Add other cases as needed
 
       default:
         return null;
@@ -224,7 +295,7 @@ function SignupModal() {
             />
           </div>
           <h2 className="text-center text-lg font-semibold mb-6">
-            {selectedForm === "professional"
+            {selectedForm === "talent"
               ? "Sign Up To Get Hired"
               : "Sign Up As A Business"}
           </h2>
@@ -244,7 +315,7 @@ function SignupModal() {
           </h2>
           <div className="flex flex-col space-y-4">
             <button
-              onClick={() => handleUserTypeSelection("professional")}
+              onClick={() => handleUserTypeSelection("talent")}
               className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
             >
               Sign Up To Get Hired
@@ -257,12 +328,7 @@ function SignupModal() {
               Sign Up As A Business On Campus
             </button>
 
-            <button
-              onClick={() => handleUserTypeSelection("explore businesses")}
-              className="border-2 border-blue-500 text-blue-500 rounded-full py-2 px-4 w-full hover:bg-[#800020] hover:text-accent transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out"
-            >
-              Sign up to Explore Businesses
-            </button>
+            
           </div>
         </div>
       )}

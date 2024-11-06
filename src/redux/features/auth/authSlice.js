@@ -4,27 +4,35 @@ const initialState = {
     user: null,
     loading: false,
     error: null,
-    userType: null
+    userType: null,
+    isAuthenticated: false
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers:{
-        setUser(state, action){
+        setUser: (state, action) =>{
             state.user=action.payload;
+            state.userType = action.payload.userType;
+            state.isAuthenticated = true;
         },
-        setLoading(state, action){
+        setLoading: (state, action)=>{
             state.loading = action.payload;
         },
-        setError(state, action){
+        setError : (state, action) =>{
             state.error = action.payload;
         },
-        clearError(state){
+        clearError: (state)=>{
             state.error = null;
         },
-        setUserType(state, action){
+        setUserType: (state, action)=>{
             state.userType = action.payload
+        },
+        logoutUser: (state) => {
+            state.user = null;
+            state.userType = null;
+            state.isAuthenticated = false
         }
     }
 })
