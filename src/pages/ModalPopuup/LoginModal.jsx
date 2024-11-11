@@ -1,29 +1,30 @@
-import { useContext, useState } from "react";
+import {useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ModalContext from "../../contexts/ModalContext";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLoading, setError } from "../../redux/features/auth/authSlice";
 import { loginWithUsername, signInWithGoogle } from "../../redux/features/auth/authService";
+import { closeModal, openModal } from "../../redux/features/modal/modalSlice";
+
 
 function LoginModal() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    const { currentModal, closeModal, openModal } = useContext(ModalContext);
     const dispatch = useDispatch();
+    const {isOpen, modalType} = useSelector((state) => state.modal)
     const loading = useSelector((state) => state.auth.loading);
     const error = useSelector((state) => state.auth.error)
     const navigate = useNavigate();
 
 
-    console.log("Current Modal: ", currentModal);
-    if (currentModal !== "login") {
+    console.log("Current Modal: ", modalType);
+    if(!isOpen || modalType !== "login"){
         return null;
     }
 
     const switchToSignUpModal = () => {
-        openModal("signup");
+        dispatch(openModal("signup"));
     }
 
     const handleSubmit = async(e) => {
@@ -32,8 +33,14 @@ function LoginModal() {
         try{
             const user = await loginWithUsername(username, password);
             dispatch(setUser(user))
-            closeModal();
-            navigate("/welcome-user", {state: {username: user.username}})
+            dispatch(closeModal());
+            
+            if(user.userType === "talent"){
+                navigate("/welcome-talent", {state: {username: user.username}});
+            }
+            else if(user.userType === "business"){
+                navigate("/welcome-business", {state:{username:user.username}});
+            }
         }
         catch(error){
             dispatch(setError(error.message));
@@ -49,8 +56,14 @@ function LoginModal() {
     try{
       const user = await signInWithGoogle();
       dispatch(setUser(user));
-      closeModal();
-      navigate("/welcome-user", {state: {username: user.username}})
+      dispatch(closeModal());
+      
+      if(user.userType === 'talent'){
+        navigate("/welcome-talent", {state: {username:user.username}});
+      }
+      else if(user.userType === "business"){
+        navigate("/welcome-business", {state: {username: user.username}});
+      }
     } 
     catch(error){
       dispatch(setError(error.message))
@@ -63,7 +76,7 @@ function LoginModal() {
         <div className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-[#f2e9e9] rounded-lg shadow-lg w-full lg:w-[700px] p-8 lg:px-[50px] relative mx-4 sm:mx-0">
                 <div className="cursor-pointer flex justify-end">
-                    <FaTimes size={30} onClick={closeModal} />
+                    <FaTimes size={30} onClick={() => dispatch(closeModal())} />
                 </div>
                 <h2 className="text-center text-lg font-semibold mb-6">Log in to your account</h2>
                 <form onSubmit={handleSubmit}>

@@ -1,11 +1,11 @@
-import { getFirestore, doc, setDoc, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, collection, getDocs, getDoc } from 'firebase/firestore';
 import { auth } from '../../../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth';
 
 const db = getFirestore();
 
 // Sign up with email and password
-export const signUp = async (username, email, password) => {
+export const signUp = async (username, email, password, userType) => {
     // eslint-disable-next-line no-useless-catch
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -15,9 +15,10 @@ export const signUp = async (username, email, password) => {
         await setDoc(doc(db, 'users', user.uid), {
             username,
             email,
+            userType,
         });
 
-        return { uid: user.uid, username, email };
+        return { uid: user.uid, username, email, userType };
     } catch (error) {
         throw error;
     }
@@ -47,7 +48,18 @@ export const loginWithUsername = async (username, password) => {
         }
 
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        return { uid: userCredential.user.uid, email };
+        const uid = userCredential.user.uid;
+
+        const userDoc = await getDoc(doc(db, 'users', uid));
+        const userData = userDoc.data();
+
+        if(!userData){
+            throw new Error("User data not found");
+        }
+
+        const userType = userData.userType || null;
+
+        return {uid, username, email, userType}
     } catch (error) {
         throw error;
     }
@@ -61,14 +73,24 @@ export const signInWithGoogle = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        // Store Google user's details in Firestore
-        const userDoc = doc(db, 'users', user.uid);
-        await setDoc(userDoc, {
-            username: user.displayName,
-            email: user.email,
-        }, { merge: true });
+        const userDocRef = doc(db, 'users', user.uid);
 
-        return { uid: user.uid, username: user.displayName, email: user.email };
+        const userDocSnap = await getDoc(userDocRef);
+        let userType;
+
+        if(userDocSnap.exists()){
+            userType = userDocSnap.data().userType;
+        }
+        else{
+            userType = 'default';
+            await setDoc(userDocRef, {
+                username: user.displayName,
+                email: user.email,
+                userType,
+            })
+        }
+        return {uid: user.uid, username: user.displayName, email:user.email,userType};
+        
     } catch (error) {
         throw error;
     }
