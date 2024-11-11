@@ -143,17 +143,29 @@ export default function SignupModal() {
 }
  */
 
-import { useDispatch } from "react-redux";
-import { setUserType, setLoading, setError } from "../../redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInWithGoogle } from "../../redux/features/auth/authService";
+import { setUserType, setLoading, setError, setUser } from "../../redux/features/auth/authSlice";
 import { closeModal } from "../../redux/features/modal/modalSlice";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
-import {signUp} from '../../redux/features/auth/authService'
+import { signUp } from "../../redux/features/auth/authService";
 
 function SignupModal() {
   const dispatch = useDispatch();
   const [selectedForm, setSelectedForm] = useState(null);
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({
+    name:"",
+    email:"",
+    password:"",
+    confirmPassword:"",
+    businessName:"",
+    businessEmail: " ",
+    businessType:""
+  });
+  const loading = useSelector((state) => state.auth.loading);
+  const navigate = useNavigate();
 
   const handleUserTypeSelection = (userType) => {
     dispatch(setUserType(userType));
@@ -166,121 +178,142 @@ function SignupModal() {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value } = e.target; //extract name and value of input field.
+    setFormData((prevData) =>{
+     const updatedData = {...prevData, [name]: value};
+     console.log(updatedData)
+     return updatedData;
+    })
   };
 
-  const handleTalentSignUp = async() => {
+  const handleTalentSignUp = async (e) => {
     e.preventDefault();
+    const { name, email, password, confirmPassword } = formData;
     if (password !== confirmPassword) {
       dispatch(setError("Passwords do not match"));
       return;
     }
-    dispatch(setLoading(true))
-    try{
-      const {name, email, password} = formData;
-      const user = await signUp(name, email, password)
-      dispatch(setUserType('talent'));
-      dispatch(setUserData(user));
+    if(password.length < 6){
+      dispatch(setError("Password must be at least 6 characters"));
+      return;
+    }
+    dispatch(setLoading(true));
+    try {
+      const user = await signUp(name, email, password);
+      dispatch(setUserType("talent"));
+      dispatch(setUser(user));
       handleCloseModal();
+      navigate('/job-openings')
+    } catch (error) {
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
     }
-    catch(error){
-      dispatch(setError(error.message))
-    }
-    finally{
-      dispatch(setLoading(false))
-    }
-  }
+  };
 
-  const handleBusinessSignUp = async() => {
+  const handleBusinessSignUp = async (e) => {
     e.preventDefault();
+    const { name, email, password, confirmPassword } = formData;
     if (password !== confirmPassword) {
       dispatch(setError("Passwords do not match"));
       return;
     }
-    dispatch(setLoading(true))
-    try{
-      const {name, email, password} = formData;
-      const user = await signUp(name, email, password)
-      dispatch(setUserType('business'));
-      dispatch(setUserData(user));
+    if(password.length < 5){
+      dispatch(setError("Password must be at least 6 characters"));
+      return
+    }
+    dispatch(setLoading(true));
+    try {
+      const user = await signUp(name, email, password);
+      dispatch(setUserType("business"));
+      dispatch(setUser(user));
       handleCloseModal();
+    } catch (error) {
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
     }
-    catch(error){
-      dispatch(setError(error.message))
+  };
+
+  const handleGoogleSignIn = async () => {
+    dispatch(setLoading(true));
+    try {
+      const user = await signInWithGoogle();
+      dispatch(setUser(user));
+      handleCloseModal();
+    } catch (error) {
+      dispatch(setError(error.message));
+    } finally {
+      dispatch(setLoading(false));
     }
-    finally{
-      dispatch(setLoading(false))
-    }
-  }
+  };
 
   // Function for rendering each specific form
   const renderForm = () => {
-    switch (selectedForm) {
-      case "talent":
-        return (
-          <form className="flex flex-col gap-3">
-            <div className="w-full mb-4">
-            <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full"
-            type="button">
-              Sign up with Google
-            </button>
+    const commonFields = [
+      { label: "Email*", name: "email", type: "email" },
+      { label: "Password", name: "password", type: "password" },
+      { label: "Confirm Password*", name: "confirmPassword", type: "password" },
+    ];
+
+    const talentFields = [{ label: "Full Name*", name: "name", type: "text" }];
+
+    const businessFields = [
+      { label: "Business Name*", name: "businessName", type: "text" },
+      { label: "Business Email Address*", name: "businessEmail", type: "text" },
+      {
+        label: "Business Type*",
+        name: "businessType",
+        type: "select",
+        options: ["Retail", "Food", "Services", "Technology"],  // Changed `option` to `options`
+      },
+    ];
+
+    const fields = selectedForm === "talent" ? talentFields : businessFields;
+
+    return (
+      <form className="flex flex-col gap-3" onSubmit={selectedForm === "talent" ? handleTalentSignUp : handleBusinessSignUp}>
+        <div className="w-full mb-4">
+          <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full" type="button" onClick={handleGoogleSignIn}>
+            Sign up with Google
+          </button>
+        </div>
+
+        {fields.concat(commonFields).map((field) => (
+          <div key={field.name}>
+            <label>{field.label}</label>
+            {field.type === "select" ? (
+              <select
+                name={field.name}
+                className="p-2 rounded border"
+                onChange={handleInputChange}
+                required
+              >
+                {field.options.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={field.type}
+                className="p-2 rounded border"
+                name={field.name}
+                onChange={handleInputChange}
+                required
+              />
+            )}
           </div>
+        ))}
 
-            <label>Full Name*</label>
-            <input type="text" className="p-2 rounded border" required />
-
-            <label>Email*</label>
-            <input type="email" className="p-2 rounded border" required />
-
-            <label>Password*</label>
-            <input type="password" className="p-2 rounded border" required />
-
-            <label>Confirm Password*</label>
-            <input type="password" className="p-2 rounded border" required />
-
-            <button className="mt-4 p-2 bg-main text-white rounded">
-              Submit
-            </button>
-          </form>
-        );
-
-      case "business":
-        return (
-          <form className="flex flex-col gap-3">
-            <label>Business Name*</label>
-            <input type="text" className="p-2 rounded border" required />
-
-            <label>Business Email Address*</label>
-            <input type="text" className="p-2 rounded border" required />
-
-            <label>Password*</label>
-            <input type="email" className="p-2 rounded border" required />
-
-            <label>Confirm Password*</label>
-            <input type="password" className="p-2 rounded border" required />
-
-            <label>Business Type*</label>
-           <select name="" id="" className="p-2 rounded border" required>
-            <option value="">Retails</option>
-            <option value="">Food</option>
-            <option value="">Services</option>
-            <option value="">Technology</option>
-           </select>
-
-          
-            <button className="mt-4 p-2 bg-main text-white rounded">
-              Submit
-            </button>
-          </form>
-        );
-
-      default:
-        return null;
-    }
+        <button
+          type="submit"
+          className="px-3 py-3 bg-main text-white rounded hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105 w-full"
+          disabled={loading}
+        >
+          {loading ? "Creating Account..." : "Create Account"}
+        </button>
+      </form>
+    );
   };
 
   return (
@@ -295,9 +328,7 @@ function SignupModal() {
             />
           </div>
           <h2 className="text-center text-lg font-semibold mb-6">
-            {selectedForm === "talent"
-              ? "Sign Up To Get Hired"
-              : "Sign Up As A Business"}
+            {selectedForm === "talent" ? "Sign Up To Get Hired" : "Sign Up As A Business"}
           </h2>
           {renderForm()}
         </div>
@@ -327,13 +358,10 @@ function SignupModal() {
             >
               Sign Up As A Business On Campus
             </button>
-
-            
           </div>
         </div>
       )}
     </div>
   );
 }
-
 export default SignupModal;

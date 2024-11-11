@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import Footer from '../components/Footer'
 import "../App.css";
 import backgroundImage from "../assets/background-pic.jpg";
 
@@ -20,7 +21,8 @@ function WelcomeUser() {
             >
                 <div>
                     <h1 className="text-center text-[34px] md:text-[50px] lg:text-[50px] p-5 font-bold">
-                        Welcome, {username}!
+                        
+                        Welcome, Talent {username}!
                     </h1>
                     <div className="flex justify-center items-center">
                         <p className="text-center text-sm md:text-lg lg:text-lg max-w-[1100px] mx-auto">
@@ -30,13 +32,14 @@ function WelcomeUser() {
                     <div className="flex justify-center items-center mt-10">
                         <button
                             className="bg-main p-4 rounded text-accent w-[300px] hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105"
-                            onClick={() => navigate("/explore-business")}
+                            onClick={() => navigate("/job-openings")}
                         >
-                            Explore Businesses
+                            Explore Job Openings
                         </button>
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

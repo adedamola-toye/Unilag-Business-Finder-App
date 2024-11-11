@@ -9,6 +9,9 @@ import ModalProvider from "../contexts/ModalProvider";
 import HireProfessional from "../pages/Hire-A-Professional";
 import JobOpenings from "../pages/JobOpenings"
 import AllBusinesses from "../pages/AllBusinesses";
+import WelcomeBusiness from '../pages/WelcomeBusiness'
+import WelcomeTalent from '../pages/WelcomeTalent'
+import AddBusiness from "../pages/AddBusiness";
 
 
 export default function GeneralRouter(){
@@ -23,9 +26,12 @@ export default function GeneralRouter(){
                 <Route path="/explore-business/show-all/:id" element={<IndividualBusiness/>} />
                 <Route path="/blog" element={<Blog/>}/>
                 <Route path="/hire-a-professional" element={<HireProfessional/>}/>
-                <Route path="job-openings" element={<JobOpenings/>}/>
+                <Route path="/job-openings" element={<JobOpenings/>}/>
+                <Route path="/add-business" element={<AddBusiness/>}/>
                 <Route path="*" element={<NotFoundPage/>}/>
                 <Route path="/welcome-user" element={<WelcomeUser/>}/>
+                <Route path="/welcome-business" element={<WelcomeBusiness/>}/>
+                <Route path="/welcome-talent" element={<WelcomeTalent/>}/>
             </Routes>
            </nav>
            </ModalProvider>
