@@ -19,7 +19,7 @@ function SignupModal() {
     password:"",
     confirmPassword:"",
     businessName:"",
-    businessEmail: " ",
+    businessEmail: "",
     businessType:""
   });
   const loading = useSelector((state) => state.auth.loading);
@@ -62,12 +62,14 @@ function SignupModal() {
     }
     dispatch(setLoading(true));
     try {
+      console.log("Attempting to sign up......")
       const user = await signUp(name, email, password);
       dispatch(setUserType("talent"));
       dispatch(setUser(user));
       handleCloseModal();
       navigate('/job-openings')
     } catch (error) {
+      console.error("Sign-up error: ", error.message)
       dispatch(setError(error.message));
     } finally {
       dispatch(setLoading(false));
@@ -172,7 +174,6 @@ function SignupModal() {
         <button
           type="submit"
           className="py-3 bg-main text-white rounded w-full hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105"
-
           disabled={loading}
         >
           {loading ? "Creating Account..." : "Create Account"}

@@ -11,14 +11,16 @@ export const signUp = async (username, email, password, userType) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        const userTypeToSave = userType || 'defaultUserType'
+
         // Store username and email in Firestore under the user's UID
         await setDoc(doc(db, 'users', user.uid), {
             username,
             email,
-            userType,
+            userType:userTypeToSave,
         });
 
-        return { uid: user.uid, username, email, userType };
+        return { uid: user.uid, username, email, userType:userTypeToSave };
     } catch (error) {
         throw error;
     }
