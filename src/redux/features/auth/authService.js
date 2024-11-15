@@ -39,27 +39,20 @@ export const getUserEmailByUsername = async (username) => {
 };
 
 // Log in with username and password
-export const loginWithUsername = async (username, password) => {
+export const loginWithEmail = async (email, password) => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const email = await getUserEmailByUsername(username);
-        if (!email) {
-            throw new Error('Username not found');
-        }
+       const userCredential = await signInWithEmailAndPassword(auth, email, password)
+       const uid = userCredential.user.uid;
 
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const uid = userCredential.user.uid;
+       const userDoc = await getDoc(doc(db, 'users', uid))
+       const userData = userDoc.data()
 
-        const userDoc = await getDoc(doc(db, 'users', uid));
-        const userData = userDoc.data();
-
-        if(!userData){
-            throw new Error("User data not found");
-        }
-
-        const userType = userData.userType || null;
-
-        return {uid, username, email, userType}
+       if(!userData){
+        throw new Error("User data  not found")
+       }
+       const userType = userData.userType || null;
+       return {uid, email, userType}
     } catch (error) {
         throw error;
     }

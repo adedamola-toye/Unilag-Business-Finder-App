@@ -136,20 +136,21 @@ function SignupModal() {
 
     return (
       <form className="flex flex-col gap-3" onSubmit={selectedForm === "talent" ? handleTalentSignUp : handleBusinessSignUp}>
-        <div className="w-full mb-4">
-          <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full" type="button" onClick={handleGoogleSignIn}>
+        <div className="w-full">
+          <button className="border-2 border-main bg-white rounded-full py-3 text-main hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105 w-full" type="button" onClick={handleGoogleSignIn}>
             Sign up with Google
           </button>
         </div>
 
         {fields.concat(commonFields).map((field) => (
-          <div key={field.name}>
-            <label>{field.label}</label>
+          <div key={field.name} className="w-full">
+            <label className="block text-main text-sm font-medium mb-2">{field.label}</label>
             {field.type === "select" ? (
               <select
                 name={field.name}
-                className="p-2 rounded border"
-                onChange={handleInputChange}
+                className="p-3 w-full border rounded-sm focus:outline-none focus:ring-2 focus:ring-main transition"
+          onChange={handleInputChange}
+                
                 required
               >
                 {field.options.map((option) => (
@@ -159,7 +160,7 @@ function SignupModal() {
             ) : (
               <input
                 type={field.type}
-                className="p-2 rounded border"
+                className="p-3 w-full border rounded-sm focus:outline-none focus:ring-2 focus:ring-main transition"
                 name={field.name}
                 onChange={handleInputChange}
                 required
@@ -170,7 +171,8 @@ function SignupModal() {
 
         <button
           type="submit"
-          className="px-3 py-3 bg-main text-white rounded hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105 w-full"
+          className="py-3 bg-main text-white rounded w-full hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105"
+
           disabled={loading}
         >
           {loading ? "Creating Account..." : "Create Account"}

@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLoading, setError } from "../../redux/features/auth/authSlice";
-import { loginWithUsername, signInWithGoogle } from "../../redux/features/auth/authService";
+import {loginWithEmail, signInWithGoogle } from "../../redux/features/auth/authService";
 import { closeModal, openModal } from "../../redux/features/modal/modalSlice";
 
 
 function LoginModal() {
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const dispatch = useDispatch();
@@ -31,15 +31,15 @@ function LoginModal() {
         e.preventDefault();
         dispatch(setLoading(true));
         try{
-            const user = await loginWithUsername(username, password);
+            const user = await loginWithEmail(email, password);
             dispatch(setUser(user))
             dispatch(closeModal());
             
             if(user.userType === "talent"){
-                navigate("/welcome-talent", {state: {username: user.username}});
+                navigate("/welcome-talent", {state: {email: user.email}});
             }
             else if(user.userType === "business"){
-                navigate("/welcome-business", {state:{username:user.username}});
+                navigate("/welcome-business", {state:{email: user.email}});
             }
         }
         catch(error){
@@ -59,10 +59,10 @@ function LoginModal() {
       dispatch(closeModal());
       
       if(user.userType === 'talent'){
-        navigate("/welcome-talent", {state: {username:user.username}});
+        navigate("/welcome-talent", {state: {email: user.email}});
       }
       else if(user.userType === "business"){
-        navigate("/welcome-business", {state: {username: user.username}});
+        navigate("/welcome-business", {state: {email: user.email}});
       }
     } 
     catch(error){
@@ -84,8 +84,8 @@ function LoginModal() {
                         <button className="border-2 border-main bg-[#ffffff] rounded-full p-2 w-full" onClick={handleGoogleSignIn}>Sign in with Google</button>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-main text-md">Username*</label>
-                        <input type="text" className="p-3 rounded-sm focus:outline-none focus:ring-1 focus:ring-main transition" value={username} onChange={(e) =>setUsername(e.target.value)} required/>
+                        <label className="text-main text-md">Email *</label>
+                        <input type="email" className="p-3 rounded-sm focus:outline-none focus:ring-1 focus:ring-main transition" value={email} onChange={(e) =>setEmail(e.target.value)} required/>
 
                         <label className="text-main text-md">Password*</label>
                         <input type="password" className="p-3 rounded-sm focus:outline-none focus:ring-1 focus:ring-main transition" value={password} onChange={(e) => setPassword(e.target.value)} required/>
