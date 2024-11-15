@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UnilagLogo from "../assets/unilag-logo.svg";
 import NavBar from "./Navbar";
 import "../App.css";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
-import { useContext } from "react";
-import ModalContext from "../contexts/ModalContext";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "firebase/auth";
+import { customSignOut } from "../redux/features/auth/authService";
+import { setUser } from "../redux/features/auth/authSlice";
+import { openModal } from "../redux/features/modal/modalSlice";
 
 export default function Header() {
-  const { openModal } = useContext(ModalContext);
   const [onClick, setOnClick] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setOnClick(!onClick);
@@ -22,16 +22,23 @@ export default function Header() {
 
   const openSignUp = (event) => {
     event.preventDefault();
-    openModal("signup");
+    dispatch(openModal("signup"));
   };
 
   const openLogIn = (event) => {
     event.preventDefault();
-    openModal("login");
+    console.log("Opening Login Modal");
+    dispatch(openModal("login"))
   };
 
-  const handleSignOut = () => {
-    dispatch(signOut());
+  const handleSignOut = async() => {
+    try{
+      await customSignOut();
+      dispatch(setUser(null))
+      navigate("/")
+    }catch(error){
+      console.log("Error signing out: ", error)
+    }
   };
 
   const navContent = (
