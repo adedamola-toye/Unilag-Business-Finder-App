@@ -20,6 +20,10 @@ export default function Header() {
     setOnClick(!onClick);
   };
 
+  const handleLogoClick = () => {
+    navigate("/")
+}
+
   const openSignUp = (event) => {
     event.preventDefault();
     dispatch(openModal("signup"));
@@ -103,7 +107,7 @@ export default function Header() {
   );
   return (
     <header className="flex items-center justify-between bg-main text-accent z-50 px-4 py-3 md:px-5 md:py-3 lg:px-8 lg:py-4 lg:pr-[90px]">
-      <div className="flex space-x-3 pl-7">
+      <div onClick={handleLogoClick} className="flex space-x-3 pl-7 cursor-pointer">
         <img src={UnilagLogo} alt="Unilag Logo" className="w-[60px] h-[60px]" />
         <h2 className="text-[25px] text-center mt-3 max-sm:text-[20px]">
           Unilag BizFinder

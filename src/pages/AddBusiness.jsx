@@ -38,11 +38,9 @@ export default function AddBusiness(){
     };
 
     await addDoc(businessCollection, businessData);
-
-    setSuccessMessage("Business added Succesfully!")
     
     setTimeout(() => {
-      setSuccessMessage('');
+      setSuccessMessage('Business added Succesfully!');
     }, 3000);
 
 
