@@ -48,12 +48,15 @@ export const loginWithEmail = async (email, password) => {
        const uid = userCredential.user.uid;
 
        const userDoc = await getDoc(doc(db, 'users', uid))
+       if(!userDoc.exists()){
+        throw new  Error('User data not found')
+       }
        const userData = userDoc.data()
 
        if(!userData){
         throw new Error("User data  not found")
        }
-       const userType = userData.userType || null;
+       const userType = userData.userType || 'defaultUserType';
        return {uid, email, userType}
     } catch (error) {
         throw error;
@@ -71,20 +74,20 @@ export const signInWithGoogle = async () => {
         const userDocRef = doc(db, 'users', user.uid);
 
         const userDocSnap = await getDoc(userDocRef);
-        let userType;
+        let userTypeToSave;
 
         if(userDocSnap.exists()){
-            userType = userDocSnap.data().userType;
+            userTypeToSave = userDocSnap.data().userType;
         }
         else{
-            userType = 'default';
+            userTypeToSave = 'defaultUserType';
             await setDoc(userDocRef, {
                 username: user.displayName,
                 email: user.email,
-                userType,
+                userType:userTypeToSave
             })
         }
-        return {uid: user.uid, username: user.displayName, email:user.email,userType};
+        return {uid: user.uid, username: user.displayName, email:user.email,userType:userTypeToSave};
         
     } catch (error) {
         throw error;
