@@ -5,7 +5,6 @@ import Blog from "../pages/Blog";
 import NotFoundPage from "./404page";
 import WelcomeUser from "../pages/WelcomeUser";
 import ExploreBusiness from "../pages/ExploreBusiness"
-import ModalProvider from "../contexts/ModalProvider";
 import HireProfessional from "../pages/Hire-A-Professional";
 import JobOpenings from "../pages/JobOpenings"
 import AllBusinesses from "../pages/AllBusinesses";
@@ -16,7 +15,6 @@ import AddBusiness from "../pages/AddBusiness";
 
 export default function GeneralRouter(){
     return(
-           <ModalProvider>
            <nav className="bg-accent">
             <Routes>
                 <Route path="/" element={<LandingPage/>}/>
@@ -34,6 +32,5 @@ export default function GeneralRouter(){
                 <Route path="/welcome-talent" element={<WelcomeTalent/>}/>
             </Routes>
            </nav>
-           </ModalProvider>
     );
 }

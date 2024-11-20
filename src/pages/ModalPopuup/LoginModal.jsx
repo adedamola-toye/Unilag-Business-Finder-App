@@ -44,6 +44,7 @@ function LoginModal() {
         }
         catch(error){
             dispatch(setError(error.message));
+            dispatch(setError(null))
         }
         finally{
             dispatch(setLoading(false));

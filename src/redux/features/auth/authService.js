@@ -20,6 +20,7 @@ export const signUp = async (username, email, password, userType) => {
             userType:userTypeToSave,
         });
 
+        localStorage.setItem('userType', userTypeToSave)
         return { uid: user.uid, username, email, userType:userTypeToSave };
     } catch (error) {
         throw error;
@@ -57,6 +58,9 @@ export const loginWithEmail = async (email, password) => {
         throw new Error("User data  not found")
        }
        const userType = userData.userType || 'defaultUserType';
+       
+       localStorage.setItem('userType', userType)
+
        return {uid, email, userType}
     } catch (error) {
         throw error;
@@ -97,3 +101,7 @@ export const signInWithGoogle = async () => {
 export const customSignOut = async() =>{
     return firebaseSignOut(auth)
 }
+
+export const getUserType = () => {
+    return localStorage.getItem('userType') || 'defaultUserType';
+};
