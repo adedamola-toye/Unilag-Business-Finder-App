@@ -4,7 +4,7 @@ import {openModal} from '../redux/features/modal/modalSlice'
 import Header from "../components/Header";
 import "../App.css";
 //import { useNavigate } from "react-router-dom";
-import backgroundImage from "../assets/background-pic.jpg";
+import backgroundImage from "../assets/unilag-pic.jpeg";
 import SignupModal from "../pages/ModalPopuup/SignupModal";
 import LoginModal from "./ModalPopuup/LoginModal";
 import Footer from "../components/Footer";
