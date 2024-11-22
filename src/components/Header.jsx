@@ -46,6 +46,7 @@ export default function Header() {
   };
 
   const navContent = (
+    
     <>
       <div className="lg:hidden block absolute top-[80px] w-full h-[50vh] left-0 right-0 z-50 bg-main transition text-center">
         <div className="border border"></div>

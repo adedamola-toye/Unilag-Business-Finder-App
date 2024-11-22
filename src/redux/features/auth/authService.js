@@ -9,12 +9,15 @@ import {
     signOut as firebaseSignOut,
 } from 'firebase/auth';
 import { mapFirebaseUserToSerializable } from '../../../utils/firebaseUserToSerializable';
+//import { setLoading } from './authSlice';
+
 
 const db = getFirestore();
 
 // Sign up with email and password
 export const signUp = async (username, email, password, userType) => {
     try {
+        //dispatch(setLoading('signingUp'))
         if (!email) throw new Error('Email is required');
 
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -51,7 +54,7 @@ export const loginWithEmail = async (email, password) => {
         const userType = userData.userType || 'defaultUserType';
 
         localStorage.setItem('userType', userType);
-        return { ...user, userType };
+        return { ...user, username: userData.username, userType };
     } catch (error) {
         throw new Error(mapFirebaseError(error.code));
     }

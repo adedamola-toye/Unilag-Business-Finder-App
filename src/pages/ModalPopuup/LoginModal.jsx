@@ -64,9 +64,9 @@ function LoginModal() {
       dispatch(setUser({ uid, email: userEmail, userType }));
       dispatch(closeModal());
       if (user.userType === "talent") {
-        navigate("/welcome-talent", { state: { email: userEmail } });
+        navigate("/welcome-talent", { state: { email: userEmail, username: user.name } });
       } else if (user.userType === "business") {
-        navigate("/welcome-business", { state: { email: userEmail } });
+        navigate("/welcome-business", { state: { email: userEmail, username: user.name } });
       }
     } catch (error) {
       dispatch(setError(error.message));
