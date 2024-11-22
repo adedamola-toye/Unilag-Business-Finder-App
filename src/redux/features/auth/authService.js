@@ -18,6 +18,7 @@ import {
 import { mapFirebaseUserToSerializable } from "../../../utils/firebaseUserToSerializable";
 //import { setLoading } from './authSlice';
 
+
 const db = getFirestore();
 
 // Sign up with email and password
@@ -60,19 +61,19 @@ export const loginWithEmail = async (email, password) => {
     const user = mapFirebaseUserToSerializable(userCredential.user);
 
     const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      console.log('Firestore User: ', userDoc.data())
-    }
-    else{
-        throw new Error("User data not found");
+    if(!userDoc.exists()){
+        throw new Error("User data not found in Firestore")
     }
 
-    const userData = userDoc.data();
+    const userData = userDoc.data();;
+    console.log('Firestore user data: ', userData)
+
     const userType = userData.userType || "defaultUserType";
 
     localStorage.setItem("userType", userType);
     return { ...user, username: userData.username, userType };
   } catch (error) {
+    console.error("Error logging in: ", error)
     throw new Error(mapFirebaseError(error.code));
   }
 };

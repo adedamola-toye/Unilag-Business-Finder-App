@@ -11,6 +11,9 @@ function WelcomeTalent() {
     console.log('Redux User:', user)
     const username = user?.username || "Talent"
     console.log('Username: ', username);
+    if(!user){
+        console.log("User data is loading or null.")
+    }
     
     const navigate = useNavigate()
     return (
