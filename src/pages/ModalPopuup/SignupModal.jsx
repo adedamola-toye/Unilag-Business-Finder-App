@@ -67,7 +67,7 @@ function SignupModal() {
       dispatch(setUserType("talent"));
       dispatch(setUser(user));
       handleCloseModal();
-      navigate('/job-openings')
+      navigate('/welcome-talent')
     } catch (error) {
       console.error("Sign-up error: ", error.message)
       dispatch(setError(error.message));
@@ -93,6 +93,7 @@ function SignupModal() {
       dispatch(setUserType("business"));
       dispatch(setUser(user));
       handleCloseModal();
+      navigate('/welcome-business')
     } catch (error) {
       dispatch(setError(error.message));
     } finally {

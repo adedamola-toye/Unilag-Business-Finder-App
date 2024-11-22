@@ -2,9 +2,10 @@ import GeneralRouter from "./components/GeneralRouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, logoutUser } from "./redux/features/auth/authSlice";
+import { setUser, logoutUser, setLoading } from "./redux/features/auth/authSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebaseConfig";
+import { mapFirebaseUserToSerializable } from "./utils/firebaseUserToSerializable";
 
 
 
@@ -14,19 +15,17 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user){ //If user logged in
-        dispatch(setUser({
-          user:user,
-          userType: user.userType || 'default',
-          isAuthenticated:true
-        }))
-      }
-      else{//If user logged out
-        dispatch(logoutUser())
-      }
+        if (user) {
+          const serializableUser = mapFirebaseUserToSerializable(user)
+            dispatch(setUser(serializableUser));
+        } else {
+            dispatch(logoutUser());
+        }
+        dispatch(setLoading(false));  // Ensure this is always called to hide the loading state
     });
     return unsubscribe;
-  }, [dispatch]);
+}, [dispatch]);
+
 
   if (loading){
     return <div>Loading...</div>

@@ -13,4 +13,10 @@ export const store = configureStore({
     modal: modalReducer,
     blog: blogReducer,
   },
+  middleware:(getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck:{
+        ignoredPaths:['auth.user']
+      }
+    })
 })

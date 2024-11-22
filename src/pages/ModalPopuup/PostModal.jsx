@@ -1,8 +1,8 @@
 import {useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+//import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, openModal } from "../../redux/features/modal/modalSlice";
+import { closeModal, /* openModal */ } from "../../redux/features/modal/modalSlice";
 import { collection, addDoc } from 'firebase/firestore';
 import { database } from "../../firebase/firebaseConfig";
 import { updatePostField, resetPostForm } from "../../redux/features/blog/blogSlice";
