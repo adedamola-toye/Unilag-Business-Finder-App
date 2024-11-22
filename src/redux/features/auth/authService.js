@@ -15,6 +15,8 @@ const db = getFirestore();
 // Sign up with email and password
 export const signUp = async (username, email, password, userType) => {
     try {
+        if (!email) throw new Error('Email is required');
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = mapFirebaseUserToSerializable(userCredential.user);
 
@@ -29,6 +31,7 @@ export const signUp = async (username, email, password, userType) => {
         localStorage.setItem('userType', userTypeToSave);
         return { ...user, username, userType: userTypeToSave };
     } catch (error) {
+        console.log('Error signing up:', error);
         throw new Error(mapFirebaseError(error.code));
     }
 };
@@ -102,6 +105,8 @@ export const getUserEmailByUsername = async (username) => {
 export const customSignOut = async () => {
     try {
         await firebaseSignOut(auth);
+        localStorage.removeItem('userType')
+        localStorage.removeItem('authToken')
     } catch (error) {
         throw new Error(mapFirebaseError(error.code));
     }

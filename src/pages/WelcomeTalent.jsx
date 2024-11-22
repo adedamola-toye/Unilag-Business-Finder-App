@@ -4,9 +4,9 @@ import Footer from '../components/Footer'
 import "../App.css";
 import backgroundImage from "../assets/background-pic.jpg";
 
-function WelcomeUser() {
+function WelcomeTalent() {
     const location = useLocation();
-    const { username } = location.state || {};
+    const {username='Talent' } = location.state||{};
     const navigate = useNavigate()
     return (
         <div className="home">
@@ -22,7 +22,7 @@ function WelcomeUser() {
                 <div>
                     <h1 className="text-center text-[34px] md:text-[50px] lg:text-[50px] p-5 font-bold">
                         
-                        Welcome, Talent {username}!
+                        Welcome,{username}!
                     </h1>
                     <div className="flex justify-center items-center">
                         <p className="text-center text-sm md:text-lg lg:text-lg max-w-[1100px] mx-auto">
@@ -44,4 +44,4 @@ function WelcomeUser() {
     );
 }
 
-export default WelcomeUser;
+export default WelcomeTalent;

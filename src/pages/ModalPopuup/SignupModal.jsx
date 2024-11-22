@@ -63,7 +63,7 @@ function SignupModal() {
     dispatch(setLoading(true));
     try {
       console.log("Attempting to sign up......")
-      const user = await signUp(name, email, password);
+      const user = await signUp(name, email, password, "talent");
       dispatch(setUserType("talent"));
       dispatch(setUser(user));
       handleCloseModal();
@@ -89,7 +89,7 @@ function SignupModal() {
     }
     dispatch(setLoading(true));
     try {
-      const user = await signUp(name, email, password);
+      const user = await signUp(name, email, password,"business");
       dispatch(setUserType("business"));
       dispatch(setUser(user));
       handleCloseModal();
@@ -105,14 +105,23 @@ function SignupModal() {
     dispatch(setLoading(true));
     try {
       const user = await signInWithGoogle();
-      dispatch(setUser(user));
-      handleCloseModal();
+      const { uid, email, displayName, userType } = user; 
+      const username = displayName ? displayName : email.split("@")[0]; 
+      dispatch(setUser({ uid, email, userType, username }));
+      dispatch(closeModal());
+      if (user.userType === "talent") {
+        navigate("/welcome-talent", { state: { username } }); 
+      } else if (user.userType === "business") {
+        navigate("/welcome-business", { state: { username } }); 
+      }
     } catch (error) {
       dispatch(setError(error.message));
     } finally {
       dispatch(setLoading(false));
     }
   };
+  
+  
 
   // Function for rendering each specific form
   const renderForm = () => {

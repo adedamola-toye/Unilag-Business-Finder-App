@@ -2,12 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "./custom.css";
 import { useSelector, useDispatch } from "react-redux";
 import { customSignOut } from "../redux/features/auth/authService";
-import { setUser } from "../redux/features/auth/authSlice";
+import { logoutUser} from "../redux/features/auth/authSlice";
 import { openModal } from "../redux/features/modal/modalSlice";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user); // Listen for changes in user state
   const navigate = useNavigate();
 
   const openSignUp = (event) => {
@@ -20,12 +20,12 @@ export default function NavBar() {
     dispatch(openModal("login"));
   };
 
-  //Handle sign out
+  // Handle sign out
   const handleSignOut = async () => {
     try {
-      await customSignOut();
-      dispatch(setUser(null));
-      navigate("/");
+      await customSignOut(); 
+      dispatch(logoutUser(null)); 
+      navigate("/"); 
     } catch (error) {
       console.log("Error signing out: ", error);
     }
@@ -58,24 +58,6 @@ export default function NavBar() {
             Blog
           </Link>
         </li>
-
-        {/* i dont get why this didn't work */}
-        {/* <li>
-                    <Link
-                        to="/hire-a-professional"
-                        className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Hire A Professional
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        to="/job-openings"
-                        className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        Job Openings
-                    </Link>
-                </li> */}
 
         {user ? (
           <li>

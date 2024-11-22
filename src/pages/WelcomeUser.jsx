@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+/* import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../App.css";
 import backgroundImage from "../assets/background-pic.jpg";
@@ -42,3 +42,4 @@ function WelcomeUser() {
 }
 
 export default WelcomeUser;
+ */
