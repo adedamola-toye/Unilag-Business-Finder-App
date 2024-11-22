@@ -2,12 +2,16 @@ import {useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from '../components/Footer'
 import "../App.css";
-import backgroundImage from "../assets/background-pic.jpg";
+import backgroundImage from "../assets/unilag-pic.jpeg";
 import { useSelector } from "react-redux";
 
 function WelcomeTalent() {
-    const {username='Talent' } = useSelector((state) =>state.auth.user) || {};
-    console.log('User:', username);
+   
+    const user = useSelector((state) => state.auth.user)
+    console.log('Redux User:', user)
+    const username = user?.username || "Talent"
+    console.log('Username: ', username);
+    
     const navigate = useNavigate()
     return (
         <div className="home">

@@ -13,11 +13,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      console.log('User payload:', action.payload);
-      state.user=mapFirebaseUserToSerializable(action.payload);
+      console.log('User payload before mapping:', action.payload);
+      const mappedUser = mapFirebaseUserToSerializable(action.payload);
+      console.log('Mapped user:', mappedUser);
+      state.user = mappedUser;
       state.isAuthenticated = true;
-      state.loading=false;
+      state.loading = false;
     },
+    
     setLoading: (state, action) => {
       state.loading = action.payload;
     },

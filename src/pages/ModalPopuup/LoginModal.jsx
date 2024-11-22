@@ -101,7 +101,6 @@ function LoginModal() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={loading} // Disable during loading
             />
             <label className="text-main text-md">Password*</label>
             <input
@@ -110,11 +109,11 @@ function LoginModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              disabled={loading} // Disable during loading
+             
             />
           </div>
           <div className="mt-5">
-            <button className="px-3 py-3 bg-main text-accent rounded hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105 w-full" disabled={loading}>
+            <button className="px-3 py-3 bg-main text-accent rounded hover:bg-complementary transition duration-300 ease-in-out transform hover:scale-105 w-full" >
               {loading ? "Logging In..." : "Log in"}
             </button>
           </div>
