@@ -32,18 +32,18 @@ function App() {
 }, [dispatch]);
 
 useEffect(() => {
-  if(isAuthenticated){
-    if(userType === "talent"){
+  if (isAuthenticated && userType) {
+    // Get the current path
+    const currentPath = window.location.pathname;
+
+    // Avoid redirecting if already on the welcome page
+    if (userType === "talent" && currentPath !== "/welcome-talent") {
       navigate("/welcome-talent");
-    }
-    else if(userType === "business"){
-      navigate("welcome-business")
-    }
-    else{
-      navigate("/default")
+    } else if (userType === "business" && currentPath !== "/welcome-business") {
+      navigate("/welcome-business");
     }
   }
-})
+}, [isAuthenticated, userType, navigate]);
 
 
 /*   if (loading && !user){
