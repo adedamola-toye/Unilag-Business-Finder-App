@@ -47,6 +47,25 @@ export default function Header() {
     }
   };
 
+  //Handle different home navigation when user logs in based on user type
+  const handleHomeNavigation =(event) => {
+    event.preventDefault();
+    if(user){
+      if (user.userType === 'talent'){
+        navigate("/welcome-talent")
+      }
+      else if(user.userType === "business"){
+        navigate("welcome-business")
+      }
+      else{
+        navigate("/welcome-user")
+      }
+    }
+    else{
+      navigate("/")
+    }
+  }
+
   
 
   const navContent = (
@@ -54,7 +73,7 @@ export default function Header() {
       <div className="border border"></div>
       <ul className="list-none space-y-10 m-10 mb-[-20px]">
         <li>
-          <Link to="/" className="decoration-black hover:bg-complementary p-3">Home</Link>
+          <Link onClick={handleHomeNavigation} className="decoration-black hover:bg-complementary p-3">Home</Link>
         </li>
         <li>
           <Link to="/explore-business" className="decoration-black hover:bg-complementary p-3">Explore Businesses</Link>

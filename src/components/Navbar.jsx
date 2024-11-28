@@ -31,12 +31,31 @@ export default function NavBar() {
     }
   };
 
+  //Handle different home navigation when user logs in based on user type
+  const handleHomeNavigation =(event) => {
+    event.preventDefault();
+    if(user){
+      if (user.userType === 'talent'){
+        navigate("/welcome-talent")
+      }
+      else if(user.userType === "business"){
+        navigate("welcome-business")
+      }
+      else{
+        navigate("/welcome-user")
+      }
+    }
+    else{
+      navigate("/")
+    }
+  }
+
   return (
     <nav className="uppercase">
       <ul className="flex list-none space-x-[35px] text-[16px] lg:text-[16px] cus">
         <li>
           <Link
-            to="/"
+            onClick={handleHomeNavigation}
             className="decoration-black hover:bg-complementary rounded-sm py-3 px-5 xl:px-5 transition-all duration-300 ease-in-out transform hover:scale-105"
           >
             Home
