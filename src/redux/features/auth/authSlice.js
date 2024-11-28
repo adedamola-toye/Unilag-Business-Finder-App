@@ -4,7 +4,7 @@ const initialState = {
   user: null,
   loading: true,
   error: null,
-  userType: null,
+  userType: localStorage.getItem("userType")|| null,
   isAuthenticated: false,
 };
 
@@ -19,6 +19,7 @@ const authSlice = createSlice({
       state.user = mappedUser;
       state.isAuthenticated = true;
       state.loading = false;
+      localStorage.setItem("userType", action.payload.userType);
     },
     
     setLoading: (state, action) => {
