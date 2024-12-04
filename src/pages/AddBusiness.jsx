@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { ref as dbRef, push } from 'firebase/database';
 import { collection, addDoc } from 'firebase/firestore';
-import { database } from '../firebase/firebaseConfig';
+import { database } from '../firebase/firebaseConfig.js';
 import { updateField, resetForm } from '../redux/features/bizForm/bizFormSlice.js';
 
 
